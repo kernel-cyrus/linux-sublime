@@ -1,12 +1,8 @@
-<style>
-.markdown-body pre {
-  max-height: 300px;
-}
-</style>
+# Explore Kernel Code with Sublime
 
-# Explore kernel code with Sublime
+It is a guide for setting up linux kernel source code exploring environment with Sublime.
 
-The guide is based on Ubuntu, but you can still use it as a reference on Windows or MacOS, it still works.
+The guide is based on Ubuntu, but you can still use it as a reference for Windows or MacOS, it will still work.
 
 ## Install Tools
 
