@@ -68,6 +68,8 @@ mv tags .tags
 
 ### Modify Project Settings
 
+Add kernel source path in "path" field.
+
 ```
 {
     "settings":{
