@@ -1,0 +1,178 @@
+From 654bae7807dd37fefc67bbc97cc7e5c7ec65e5ef Mon Sep 17 00:00:00 2001
+From: Cyrus Huang <cyrus.kernel@gmail.com>
+Date: Sat, 18 Mar 2023 09:03:08 +0800
+Subject: [PATCH] 1. Modify cscope result ui 2. Add jump support for default
+ sublime find buffer 3. Add support for cscope "search for global
+ definition"wq
+
+---
+ .gitattributes                   |  1 +
+ Lookup Results.hidden-tmLanguage |  2 +-
+ cscope.py                        | 53 ++++++++++++++++++++++----------
+ 3 files changed, 39 insertions(+), 17 deletions(-)
+ create mode 100644 .gitattributes
+
+diff --git a/.gitattributes b/.gitattributes
+new file mode 100644
+index 0000000..92be83e
+--- /dev/null
++++ b/.gitattributes
+@@ -0,0 +1 @@
++* text eol=crlf
+diff --git a/Lookup Results.hidden-tmLanguage b/Lookup Results.hidden-tmLanguage
+index d811536..523ac7a 100644
+--- a/Lookup Results.hidden-tmLanguage	
++++ b/Lookup Results.hidden-tmLanguage	
+@@ -21,7 +21,7 @@
+ 		</dict>
+ 		<dict>
+ 			<key>match</key>
+-			<string>^\s*([0-9]+)\s+(\[\S+: \S+\])</string>
++			<string>^\s*([0-9]+):\s+(\[\S+: \S+\])</string>
+ 			<key>captures</key>
+ 			<dict>
+ 				<key>1</key>
+diff --git a/cscope.py b/cscope.py
+index 10dceee..e099cdd 100644
+--- a/cscope.py
++++ b/cscope.py
+@@ -23,7 +23,8 @@ CSCOPE_SEARCH_MODES = {
+     # intentionally not providing 5/Change this text string
+     6: "egrep pattern",
+     7: "file named",
+-    8: "files #including this file"
++    8: "files #including this file",
++    11: "search for global definition"
+ }
+ CSCOPE_CMD_DATABASE_REBUILD = "database_rebuild"
+ 
+@@ -301,19 +302,19 @@ class CscopeSublimeSearchWorker(threading.Thread):
+             if nested:
+                 match_string = ("{0:>6}\n{1:>6} [scope: {2}] {3}").format("..", match["line"], match["scope"], match["instance"])
+             else:
+-                match_string = ("\n{0}:\n{1:>6} [scope: {2}] {3}").format(match["file"].replace(self.database.root, "."), match["line"], match["scope"], match["instance"])
++                match_string = ("\n{0}:\n{1:>6} [scope: {2}] {3}").format(match["file"], match["line"], match["scope"], match["instance"])
+         elif command_mode == 1:
+             if nested:
+                 match_string = ("{0:>6}\n{1:>6} {2}").format("..", match["line"], match["instance"])
+             else:
+-                match_string = ("\n{0}:\n{1:>6} {2}").format(match["file"].replace(self.database.root, "."), match["line"], match["instance"])
++                match_string = ("\n{0}:\n{1:>6} {2}").format(match["file"], match["line"], match["instance"])
+         elif command_mode in [2, 3]:
+             if nested:
+                 match_string = ("{0:>6}\n{1:>6} [function: {2}] {3}").format("..", match["line"], match["function"], match["instance"])
+             else:
+-                match_string = ("\n{0}:\n{1:>6} [function: {2}] {3}").format(match["file"].replace(self.database.root, "."), match["line"], match["function"], match["instance"])
++                match_string = ("\n{0}:\n{1:>6} [function: {2}] {3}").format(match["file"], match["line"], match["function"], match["instance"])
+         elif command_mode == 7:
+-                match_string = ("\n{0}:").format(match["file"].replace(self.database.root, "."))
++                match_string = ("\n{0}:").format(match["file"])
+ 
+         return match_string
+ 
+@@ -329,7 +330,7 @@ class CscopeSublimeSearchWorker(threading.Thread):
+                 output = {
+                     "file": match.group(1),
+                     "scope": match.group(2),
+-                    "line": match.group(3),
++                    "line": match.group(3) + ":",
+                     "instance": match.group(4)
+                 }
+         elif mode == 1:
+@@ -337,7 +338,7 @@ class CscopeSublimeSearchWorker(threading.Thread):
+             if match:
+                 output = {
+                     "file": match.group(1),
+-                    "line": match.group(2),
++                    "line": match.group(2) + ":",
+                     "instance": match.group(3)
+                 }
+         elif mode in [2, 3]:
+@@ -347,7 +348,7 @@ class CscopeSublimeSearchWorker(threading.Thread):
+                 output = {
+                     "file": match.group(1),
+                     "function": match.group(2),
+-                    "line": match.group(3),
++                    "line": match.group(3) + ":",
+                     "instance": match.group(4)
+                 }
+ 
+@@ -380,7 +381,7 @@ class CscopeSublimeSearchWorker(threading.Thread):
+ 
+         self.matches = []
+         for i in output:
+-            match = self.match_output_line(i, mode)
++            match = self.match_output_line(self.database.location.replace('\\', '/').replace('cscope.out', '') + i, mode)
+             if match != None:
+                 self.matches.append(match)
+                 # print "File ", match.group(1), ", Line ", match.group(2), ", Instance ", match.group(3)
+@@ -494,20 +495,40 @@ class CscopeCommand(sublime_plugin.TextCommand):
+             self.workers = []
+ 
+     def display_results(self, symbol, output):
+-        cscope_view = self.view.window().new_file()
++
++        win = sublime.active_window()
++
++        found_buffers = [v for v in win.views() if v.name() == 'Find Results' and v.is_scratch()]
++
++        if found_buffers:
++            cscope_view = found_buffers.pop()
++            cscope_view.set_viewport_position(cscope_view.layout_extent(), False)
++            win.focus_view(cscope_view)
++        else:
++            cscope_view = self.view.window().new_file()
++            cscope_view.set_name("Cscope results - " + symbol)
++
++        cscope_view.run_command("select_all")
++        cscope_view.run_command("right_delete")
++
+         cscope_view.set_scratch(True)
+-        cscope_view.set_name("Cscope results - " + symbol)
+         CscopeCommand.cscope_output_info['view'] = cscope_view
+-        CscopeCommand.cscope_output_info['pos'] = 0
++        CscopeCommand.cscope_output_info['pos'] = cscope_view.size()
+         CscopeCommand.cscope_output_info['text'] = output
+         CscopeCommand.cscope_output_info['symbol'] = symbol
+ 
+         cscope_view.run_command("display_cscope_results")
++        cscope_view.run_command("bfb_clear_file_path")
+ 
+         cscope_view.set_syntax_file(CSCOPE_SYNTAX_FILE)
+         cscope_view.set_read_only(True)
+ 
+     def run(self, edit, mode):
++        # Show search input panel when search global definition
++        show_panel = False
++        if mode >= 10:
++            mode = mode - 10
++            show_panel = True
+         self.mode = mode
+         self.executable = get_setting("executable", "cscope")
+ 
+@@ -540,9 +561,9 @@ class CscopeCommand(sublime_plugin.TextCommand):
+         self.view.sel().add(sublime.Region(one, two))
+ 
+         symbol = self.view.substr(self.view.word(first_selection))
+-        if get_setting("prompt_before_searching") == True:
++        if get_setting("prompt_before_searching") == True or show_panel:
+             sublime.active_window().show_input_panel('Search Cscope for ' + CSCOPE_SEARCH_MODES[self.mode] + ':',
+-                                                     symbol,
++                                                     "" if show_panel else symbol,
+                                                      self.on_search_confirmed,
+                                                      None,
+                                                      None)
+@@ -572,7 +593,7 @@ class CscopeCommand(sublime_plugin.TextCommand):
+ class DisplayCscopeResultsCommand(sublime_plugin.TextCommand):
+ 
+     def run(self, edit):
+-        self.view.insert(edit, CscopeCommand.cscope_output_info['pos'], CscopeCommand.cscope_output_info['text'])
++        self.view.insert(edit, CscopeCommand.cscope_output_info['pos'], CscopeCommand.cscope_output_info['text'] + '\n\n')
+         if get_setting("display_outline") == True:
+             symbol_regions = self.view.find_all(CscopeCommand.cscope_output_info['symbol'], sublime.LITERAL)
+-            self.view.add_regions('cscopesublime-outlines', symbol_regions[1:], "text.find-in-files", "", sublime.DRAW_OUTLINED)
++            self.view.add_regions('cscopesublime-outlines', symbol_regions[1:], "text.find-in-files", "", sublime.DRAW_OUTLINED)
+\ No newline at end of file
+-- 
+2.25.1
+
