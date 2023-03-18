@@ -191,6 +191,8 @@ CscopeSublime: `"prompt_before_searching": false`
 
 `ctrl + \`: More cscope search commands
 
+\* If click the search result not jump into the function, press `enter` on the result line to jump.
+
 ### Git History/Blame
 
 `right click menu` - `Open Git Repository...`: Use Sublime Merge to open this repository
