@@ -68,7 +68,7 @@ mv tags .tags
 
 ### Modify Project Settings
 
-Add kernel source path in "path" field.
+You need to add kernel source path in the "path" field.
 
 ```
 {
