@@ -41,8 +41,8 @@ Other Plugins：
 
 For better experience, you need apply the patches for the plugins:
 
-- BetterFindBuffer: sublime-betterfindbuffer.patch
-- CscopeSublime: sublime-cscope.patch
+- BetterFindBuffer: [sublime-betterfindbuffer.patch](https://github.com/kernel-cyrus/linux-sublime/blob/master/sublime-betterfindbuffer.patch)
+- CscopeSublime: [sublime-cscope.patch](https://github.com/kernel-cyrus/linux-sublime/blob/master/sublime-cscope.patch)
 
 ## 3. Generate ctags and cscope
 
