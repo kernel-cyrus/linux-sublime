@@ -173,6 +173,8 @@ CscopeSublime: `"prompt_before_searching": false`
 
 ### Navigation
 
+`ctrl + p`: Search a file name
+
 `alt + 1`: Jump to definition
 
 `alt + 2`: Look up functions calling this function
@@ -190,6 +192,8 @@ CscopeSublime: `"prompt_before_searching": false`
 `alt + f2`: View all bootmarks
 
 `ctrl + \`: More cscope search commands
+
+`ctrl + r`: Search symbol inside this file
 
 \* If click the search result not jump into the function, press `enter` on the result line to jump.
 
