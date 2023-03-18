@@ -165,7 +165,7 @@ mv tags .tags
 
 CscopeSublime: `"prompt_before_searching": false`
 
-## 5. Usages
+## Usages
 
 ### Navigation
 
