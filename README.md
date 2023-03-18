@@ -163,7 +163,7 @@ mv tags .tags
 ]
 ```
 
-### Modify Other Plugin Settings
+### Other Plugin Settings
 
 CscopeSublime: `"prompt_before_searching": false`
 
