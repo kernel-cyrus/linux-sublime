@@ -1,6 +1,6 @@
 # Explore Kernel Source Code with Sublime
 
-It is a guide for setting up linux kernel source code exploring environment with Sublime.
+It is a guide for setting up linux kernel code exploring environment with Sublime.
 
 The guide is based on Ubuntu, but you can still use it as a reference for Windows or MacOS, it will still work.
 
@@ -39,21 +39,23 @@ Other Plugins：
 - Devicetree DTS Highlighting (.dts/.dtsi support)
 - View Bootkmarks (view all bookmarks)
 
-For better experience, you need apply the patches for the plugins:
+For better experience, you need apply the patches for these plugins:
 
 - BetterFindBuffer: [sublime-betterfindbuffer.patch](https://github.com/kernel-cyrus/linux-sublime/blob/master/sublime-betterfindbuffer.patch)
 - CscopeSublime: [sublime-cscope.patch](https://github.com/kernel-cyrus/linux-sublime/blob/master/sublime-cscope.patch)
 
+The patches fix symbol jump issue and improve functions to explore the linux kernel code.
+
 ## 3. Generate ctags and cscope
 
-For linux kernel, after your kernel is built, you can generate .tag with:
+For linux kernel, after kernel has been built, you can generate .tag and cscope index files with:
 
 ```
-make tags cscope
+make ARCH=arm64 COMPILED_SOURCE=1 tags cscope
 mv tags .tags
 ```
 
-For android common kernel, you need copy all .o to source folder
+For android common kernel, you need copy all .o to source folder first:
 
 ```
 cp -r out/android.../common ./
