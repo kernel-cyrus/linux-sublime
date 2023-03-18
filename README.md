@@ -4,25 +4,25 @@ It is a guide for setting up linux kernel source code exploring environment with
 
 The guide is based on Ubuntu, but you can still use it as a reference for Windows or MacOS, it will still work.
 
-## Install Tools
+## 1. Install Tools
 
-### 1. Install Sublime Text
+### Install Sublime Text
 
 <https://www.sublimetext.com/download>
 
-### 2. Install Sublime Merge
+### Install Sublime Merge
 
 <https://www.sublimemerge.com/download>
 
-### 3. Install Ctags
+### Install Ctags
 
 `sudo apt install ctags`
 
-### 4. Install Cscope
+### Install Cscope
 
 `sudo apt install ctags`
 
-## Install Sublime Plugins
+## 2. Install Sublime Plugins
 
 Install the following plugins in sublime package control:
 
@@ -44,7 +44,7 @@ For better experience, you need apply the patches for the plugins:
 - BetterFindBuffer: sublime-betterfindbuffer.patch
 - CscopeSublime: sublime-cscope.patch
 
-## Generate ctags and cscope
+## 3. Generate ctags and cscope
 
 For linux kernel, after your kernel is built, you can generate .tag with:
 
@@ -62,7 +62,7 @@ make clean,mrproper
 mv tags .tags
 ```
 
-## Configure Sublime Settings
+## 4. Configure Sublime Settings
 
 ### Modify Project Settings
 
@@ -165,7 +165,7 @@ mv tags .tags
 
 CscopeSublime: `"prompt_before_searching": false`
 
-## Usage
+## 5. Usages
 
 ### Navigation
 
