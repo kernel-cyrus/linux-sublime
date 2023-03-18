@@ -1,4 +1,4 @@
-# Explore Kernel Code with Sublime
+# Explore Kernel Source Code with Sublime
 
 It is a guide for setting up linux kernel source code exploring environment with Sublime.
 
