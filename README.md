@@ -189,15 +189,15 @@ CscopeSublime: `"prompt_before_searching": false`
 
 `alt + f1`: Jump to definition (sublime index)
 
-`alt + f2`: View all bootmarks
-
 `ctrl + \`: More cscope search commands
 
 `ctrl + r`: Search symbol inside this file
 
+`ctrl + shift + f`: Search from all files
+
 \* If click the search result not jump into the function, press `enter` on the result line to jump.
 
-### Git History/Blame
+### Git
 
 `right click menu` - `Open Git Repository...`: Use Sublime Merge to open this repository
 
@@ -213,8 +213,8 @@ CscopeSublime: `"prompt_before_searching": false`
 
 `f2`: Toggle a bootkmark
 
-`ctrl + shift + f`: Search from all files
+`alt + f2`: View all bootmarks
 
-### Compare/Diff
+### Compare
 
 `right click menu` - `sublimerge...`: Compare this file to ...
