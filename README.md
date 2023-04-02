@@ -30,7 +30,7 @@ Install the following plugins in sublime package control:
 - Git blame
 - Outline (sidebar function outline)
 - Simple ifdef (highlight #ifdef)
-- Sublimerge Pro (diff tool)
+- Sublimerge 3 (diff tool)
 - Devicetree DTS Highlighting (.dts/.dtsi support)
 - View Bootkmarks (view all bookmarks)
 
