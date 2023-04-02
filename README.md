@@ -20,7 +20,7 @@ The guide is based on Ubuntu, but you can still use it as a reference for Window
 
 ### Install Cscope
 
-`sudo apt install ctags`
+`sudo apt install cscope`
 
 ## 2. Install Sublime Plugins
 
