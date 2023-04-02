@@ -27,24 +27,21 @@ The guide is based on Ubuntu, but you can still use it as a reference for Window
 Install the following plugins in sublime package control:
 
 - Ctags
-- CscopeSublime
 - Git blame
-
-Other Plugins：
-
-- BetterFindBuffer (cooperate with cscope results view, support click jump)
 - Outline (sidebar function outline)
 - Simple ifdef (highlight #ifdef)
 - Sublimerge Pro (diff tool)
 - Devicetree DTS Highlighting (.dts/.dtsi support)
 - View Bootkmarks (view all bookmarks)
 
-For better experience, you need apply the patches for these plugins:
+Install the following plugins from git clone:
 
-- BetterFindBuffer: [sublime-betterfindbuffer.patch](https://github.com/kernel-cyrus/linux-sublime/blob/master/sublime-betterfindbuffer.patch)
-- CscopeSublime: [sublime-cscope.patch](https://github.com/kernel-cyrus/linux-sublime/blob/master/sublime-cscope.patch)
+```
+git clone https://github.com/kernel-cyrus/fork-BetterFindBuffer.git ~/.config/sublime-text/Packages/BetterFindBuffer
+git clone https://github.com/kernel-cyrus/fork-CscopeSublime.git ~/.config/sublime-text/Packages/CscopeSublime
+```
 
-The patches fix symbol jump issue and improve functions to explore the linux kernel code.
+The forks fix symbol jump issue and improve functions to explore the linux kernel code
 
 ## 3. Generate ctags and cscope
 
