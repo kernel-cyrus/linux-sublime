@@ -70,21 +70,21 @@ You need to add kernel source path in the "path" field.
 ```
 {
     "settings":{
-        "font_face": "Consolas",                # Set mono font
-        "font_size": 11,                        # Set font size
-        "tab_size": 8,                          # Set tab size for kernel code
-        "translate_tabs_to_spaces": false,      # Set tab for kernel code
-        "index_files": false,                   # Disable auto indexing (we use ctags and cscopes)
-        "auto_complete": false,                 # Disable auto completion
-        "auto_match_enabled": false             # Disable auto match
-        "tab_completion": false,                # Disable tab completion
-        "detect_indentation": false,            # Disable indentation auto detect
+        "font_face": "Consolas",                // Set mono font
+        "font_size": 11,                        // Set font size
+        "tab_size": 8,                          // Set tab size for kernel code
+        "translate_tabs_to_spaces": false,      // Set tab for kernel code
+        "index_files": false,                   // Disable auto indexing (we use ctags and cscopes)
+        "auto_complete": false,                 // Disable auto completion
+        "auto_match_enabled": false,            // Disable auto match
+        "tab_completion": false,                // Disable tab completion
+        "detect_indentation": false,            // Disable indentation auto detect
     },
     "folders":
     [
         {
-            "path": "",                         # Set kernel source code path
-            "folder_exclude_patterns":          # Only keep aarch64 files
+            "path": "",                         // Set kernel source code path
+            "folder_exclude_patterns":          // Only keep aarch64 files
             [
                 "common/arch/arc",
                 "common/arch/arm",
@@ -123,7 +123,7 @@ You need to add kernel source path in the "path" field.
                 "common/usr",
                 "common/certs",
             ],
-            "file_include_patterns":            # Only keep source files
+            "file_include_patterns":            // Only keep source files
             [
                 "*.h",
                 "*.c",
