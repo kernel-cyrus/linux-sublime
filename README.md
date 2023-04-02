@@ -16,7 +16,7 @@ The guide is based on Ubuntu, but you can still use it as a reference for Window
 
 ### Install Ctags
 
-`sudo apt install ctags`
+`sudo apt install universal-ctags`
 
 ### Install Cscope
 
