@@ -164,7 +164,7 @@ You need to add kernel source path in the "path" field.
 
 ### Other Plugin Settings
 
-CscopeSublime: `"prompt_before_searching": false`
+CscopeSublime: `{"prompt_before_searching": false}`
 
 ## Start to use
 
