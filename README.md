@@ -33,6 +33,7 @@ Install the following plugins in sublime package control:
 - Sublimerge 3 (diff tool)
 - Devicetree DTS Highlighting (.dts/.dtsi support)
 - View Bootkmarks (view all bookmarks)
+- SideBarEnhancements (extend sidebar functions)
 
 Install the following plugins from git clone:
 
@@ -62,6 +63,14 @@ mv tags .tags
 ```
 
 ## 4. Configure Sublime Settings
+
+### Modify Sublime Settings
+
+```
+{
+    "index_files": false,                       // Disable default indexing
+}
+```
 
 ### Modify Project Settings
 
@@ -111,6 +120,7 @@ You need to add kernel source path in the "path" field.
                 "common/arch/xtensa",
                 "common/arch/i386",
                 "common/arch/x86_64",
+                "common/arch/loongarch",
                 "common/crypto",
                 "common/lib",
                 "common/LICENSES",
@@ -164,7 +174,13 @@ You need to add kernel source path in the "path" field.
 
 ### Other Plugin Settings
 
-CscopeSublime: `{"prompt_before_searching": false}`
+CscopeSublime Settings:
+
+```
+{
+    "prompt_before_searching": false
+}
+```
 
 ## Start to use
 
