@@ -221,11 +221,11 @@ CscopeSublime Settings:
 
 `shift + ctrl + c`: Show git blame of each line
 
-### Bootkmark
+### Bookmarks
 
-`f2`: Toggle a bootkmark
+`f2`: Toggle a bookmark
 
-`alt + f2`: View all bootmarks
+`alt + f2`: View all bookmarks
 
 ### Compare
 
